@@ -4,13 +4,17 @@ from __future__ import unicode_literals
 from django.db import models
 import uuid
 import datetime
+from django.utils import timezone
+
 
 
 # Create your models here.
 class BaseModel(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=400, db_index=True)  # 名称  , 指定 db_index=True
+    # create_time = models.DateTimeField(default=timezone.now(), db_index=True)
     create_time = models.DateTimeField(default=datetime.datetime.now(), db_index=True)
+    # modify_time = models.DateTimeField(default=timezone.now(), blank=True, null=True)
     modify_time = models.DateTimeField(default=datetime.datetime.now(), blank=True, null=True)
     status = models.IntegerField(default=0)  # 0-隐藏，1-有效，-1删除
     operator_id = models.CharField(max_length=50, blank=True, null=True)  # 操作员id

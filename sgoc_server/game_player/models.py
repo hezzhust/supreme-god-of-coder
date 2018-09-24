@@ -36,11 +36,13 @@ from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, User
 #         abstract = True
 
 
+
+
 # 玩家角色表
 # 玩家的设定为，一位陨落的至尊元神，夺舍一具肉体，重头开始修炼，因此属性继承自
 class PlayerModel(BaseModel):
     neakname = models.CharField(max_length=100, blank=True, null=True);  #
-    setting_servant = models.ForeignKey(SettingServantModel, models.DO_NOTHING) #夺舍的肉体
+    setting_servant = models.ForeignKey(SettingServantModel, models.DO_NOTHING, blank=True, null=True) #夺舍的肉体, 创建角色时为空
     sys_user = models.ForeignKey(User, models.DO_NOTHING)
 
     realm = models.IntegerField(default=0);  # 大境界，0-10 分别为，炼气，筑基，金丹，元婴， 地仙，灵仙，上仙，天仙，金仙， 至尊
@@ -64,7 +66,7 @@ class PlayerModel(BaseModel):
     main_attribute = models.IntegerField(default=0);  # 五行主属性，1-10分别对应，金木水火土，风雷，光暗，混沌
     special_body = models.CharField(max_length=500, blank=True, null=True);  # 特殊体质，使用枚举值列表
 
-    life_weapon = models.ForeignKey(WeaponModel, models.DO_NOTHING, blank=True, null=True)  # 本命法宝
+    life_weapon_id = models.CharField(max_length=100, blank=True, null=True) # 本命法宝
 
     class Meta:
         db_table = "player"
@@ -99,7 +101,7 @@ class ServantModel(BaseModel):
     main_attribute = models.IntegerField(default=0);  # 五行主属性，1-10分别对应，金木水火土，风雷，光暗，混沌
     special_body = models.CharField(max_length=500, blank=True, null=True);  # 特殊体质，使用枚举值列表
 
-    life_weapon = models.ForeignKey(WeaponModel, models.DO_NOTHING, blank=True, null=True) # 本命法宝
+    life_weapon_id = models.CharField(max_length=100, blank=True, null=True) # 本命法宝
 
     class Meta:
         db_table = "player_servant"
